@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KBC Quiz</title>
+    </head>
+
+    <body>
+        <h1>KBC Quiz</h1>
+        <button onclick="start()">Start</button>
+        <br><br>
+
+
+        <label for="optionInput">Enter option number:</label>
+        <input type="text" id="optionInput">
+        <button onclick="CreateFeedbackComponent(currentQuestionIndex)">Submit</button>
+        <button onclick="nextQuestion()">Next</button>
+
+
+        <div id="questiondiv"></div>
+        <div id="optiondiv"></div>
+        <div id="feedbackdiv"></div>
+
+
+
+    </body>
+
+    <script>
+        // Define the questions, options, and correct answers
+        const questions = [
+            {
+                q: "1.What planet is closest to Earth?",
+                opt: ["1. Earth", "2. Mercury", "3. Pluto", "4. Moon"],
+                ans: 2 // Correct answer is option 2 (Mercury)
+            },
+            {
+                q: "2.What is the national aquatic animal of india ?",
+                opt: ["1. River Dolphin","2. Rohu","3. Shark","4. Sea Hourse"],
+                ans: 1 // Correct answer is option 2 (Mercury)
+            },
+            {
+                q: "3.Who invented the radio ?",
+                opt: ["1.Guglielmo Marconi","2.Rober Helena","3.Tommy kong","4.Albort"],
+                ans: 1 // Correct answer is option 2 (Mercury)
+            },
+            {
+                q: "4.What is the capital id canada?",
+                opt: ["1.Honkong","2.Ottawa","3.London","4.Bankok"],
+                ans: 2 // Correct answer is option 2 (Mercury)
+            },
+            {
+                q: "5.What is the capital of France?",
+                opt: ["1. Madrid", "2. Berlin", "3. Paris", "4. Rome"],
+                ans: 3 // Correct answer is option 3 (Paris)
+            },
+            {
+                q: "6.Which is the largest ocean on Earth?",
+                opt: ["1. Atlantic", "2. Indian", "3. Arctic", "4. Pacific"],
+                ans: 4 // Correct answer is option 4 (Pacific)
+            }
+        ];
+        let currentQuestionIndex=0;
+            function start(){
+
+                render(currentQuestionIndex);
+            }
+
+            function render(index){
+            CreateQuestionComponent(index);
+            CreateOptionComponent(index);
+            
+            
+                
+            };
+            function CreateQuestionComponent(index){
+                // Get the current question
+                console.log('create Question recived index'+index)
+                const question = questions[index];
+
+                // Display the question
+                const questionElement = document.createElement('h2');
+                questionElement.innerHTML = question.q;
+                document.getElementById('questiondiv').appendChild(questionElement);
+            }
+
+//create option component
+
+            function CreateOptionComponent(index){
+                console.log('create option recived index'+index)
+                for(let i=0;i<4;i++){
+                    const optionElement=document.createElement('h4');
+                    option=questions[index].opt[i];
+                    optionElement.innerHTML = option;
+                    document.getElementById('optiondiv').appendChild(optionElement);
+                }
+                
+            }
+// create feddback component
+
+            function CreateFeedbackComponent(index){
+                console.log('create Feedback recived index'+index)
+                const feedbackElement = document.createElement('div');
+               
+                const resulthtml= check(index);
+               feedbackElement.innerHTML=resulthtml;
+               document.getElementById('feedbackdiv').appendChild(feedbackElement)
+            }
+
+            function check(index){
+                const result = document.querySelector('#optionInput');
+                const selectedOption = parseInt(result.value);
+               // console.log(index+'problem')
+                const currectoption= questions[index].ans;
+                console.log(currectoption);
+                
+                // Check if the selected answer is correct
+            if (selectedOption === currectoption) {
+                return '<h3 style="color: green;">Correct!</h3>';
+            } 
+            else 
+               {
+                return  '<h3 style="color: red;">Incorrect!</h3>';
+               
+            }};
+            function nextQuestion(){
+                //empty div's and call again render function 
+
+                document.getElementById('questiondiv').innerHTML="";
+                document.getElementById('optiondiv').innerHTML="";
+                document.getElementById('feedbackdiv').innerHTML="";
+                console.log(" next question function  befor updating  index value"+currentQuestionIndex)
+                currentQuestionIndex=currentQuestionIndex+1;
+                console.log(" next question function update index value"+currentQuestionIndex)
+                if(currentQuestionIndex>5){
+                    alert('Game Over');
+                }
+                start();
+               
+                
+            }
+            
+
+    </script>
+
+</html>
